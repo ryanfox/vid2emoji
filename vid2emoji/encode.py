@@ -1,10 +1,14 @@
+import importlib.resources as pkg_resources
+import json
 import math
+import os
 import platform
-import subprocess
 import sys
 
+from vid2emoji import emojEncode
+from vid2emoji.emojEncode import emojencoder
+
 from moviepy.editor import VideoFileClip, ImageClip, concatenate
-from emojEncode import emojencoder
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from PIL import Image, ImageDraw, ImageFont
@@ -13,8 +17,11 @@ from tqdm import tqdm
 
 def encode(video_filename):
     original_clip = VideoFileClip(video_filename)
-
-    colors, emojis = emojencoder.read_emoji_file(path='emojEncode/emojiGamutPartitioned.json')
+    
+    emoji_file_content = pkg_resources.read_text(emojEncode, 'emojiGamutPartitioned.json')
+    emoji_json = json.loads(emoji_file_content)
+    
+    colors, emojis = emojencoder.read_emoji_file(emoji_json)
     knn = KNeighborsClassifier(n_neighbors=1)
     knn.fit(X=colors, y=np.arange(len(colors)))
 
@@ -60,7 +67,13 @@ def encode(video_filename):
 
     emoji_clip = concatenate(images)
     emoji_clip = emoji_clip.set_audio(original_clip.audio)
-    emoji_clip.write_videofile('emoji_' + video_filename, fps=original_clip.fps)
+    
+    base, extension = os.path.splitext(video_filename)
+    emoji_clip.write_videofile(base + '_emoji' + extension, fps=original_clip.fps)
+
+
+def main():
+    encode(sys.argv[1])
 
 
 if __name__ == '__main__':

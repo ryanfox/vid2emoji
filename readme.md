@@ -13,9 +13,11 @@ https://www.youtube.com/watch?v=hLpJeg21-Iw
 
 emojEncode used under GPLv3. Original available at https://github.com/Ophelia-Heyes/emojEncode
 
-## Usage
-Install dependencies with `pip install -r requirements.txt`
+## Installation
+Install with `pip install vid2emoji`
 
+
+## Usage
 ```
-python encode.py <your video file>
+vid2emoji <your video file>
 ```

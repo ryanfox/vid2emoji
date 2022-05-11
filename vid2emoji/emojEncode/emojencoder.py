@@ -20,9 +20,9 @@ def convertImage(knn, emojis, image):
     return '\n'.join(['\u2009'.join(line) for line in result])
 
 
-def read_emoji_file(path='emojiGamutPartitioned.json'):
-    with open(path) as json_file:
-        emojiDict = json.load(json_file)
+def read_emoji_file(emojiDict):
+    #with open(path) as json_file:
+    #    emojiDict = json.load(json_file)
 
     colors, emojis = [], []
     for batch in emojiDict:
