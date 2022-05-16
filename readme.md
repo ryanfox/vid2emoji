@@ -22,4 +22,4 @@ Install with `pip install vid2emoji`
 vid2emoji <your video file>
 ```
 
-Made by [Fox Row](https://foxrow.com)
+Made by [Fox Row.](https://foxrow.com)
